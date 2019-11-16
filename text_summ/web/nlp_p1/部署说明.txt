@@ -14,7 +14,7 @@
 7. 启动uwsgi
     uwsgi uwsgi.ini
 
-
+部署时uwsgi.ini需要修改目录
 
 其他辅助：
 
