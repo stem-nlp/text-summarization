@@ -24,7 +24,8 @@ class TrainCallback(CallbackAny2Vec):
         _logger.info('Train Epoch {} end'.format(self.epochs))
 
 
-def train_wordvec(corpus_filepath, binary=True, save_wv=False):
+def train_wordvec(corpus_filepath, binary=True,
+                  save_wv=False, wv_filepath=config.WV_WORD_VECTOR_FILEPTH):
     """
     Train word vectors.
     """
@@ -33,7 +34,7 @@ def train_wordvec(corpus_filepath, binary=True, save_wv=False):
                      callbacks=(TrainCallback(),))
 
     if save_wv:
-        model.wv.save_word2vec_format(config.WV_WORD_VECTOR_FILEPTH, binary=binary)
+        model.wv.save_word2vec_format(wv_filepath, binary=binary)
 
     return model
 
