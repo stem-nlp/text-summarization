@@ -22,7 +22,7 @@ def cut(s):
     return list(jieba.cut(s))
 
 
-def most_similarity(Vs, Vt, top_n=10, n_neighbors=3):
+def most_similarity(Vs, Vt, top_n=10, k_neighbors=3):
     """
     Text summarize model.
 
@@ -37,8 +37,8 @@ def most_similarity(Vs, Vt, top_n=10, n_neighbors=3):
     # KNN smoothing
     new_sim = np.zeros(len(similarities))
     for i, sim in enumerate(similarities):
-        start = max([0, i - (n_neighbors+1)])
-        end = i + n_neighbors + 1
+        start = max([0, i - (k_neighbors+1)])
+        end = i + k_neighbors + 1
         new_sim[i] = np.mean(similarities[start:end])
 
     sim = new_sim
@@ -46,7 +46,7 @@ def most_similarity(Vs, Vt, top_n=10, n_neighbors=3):
     return sorted(np.argsort(sim)[::-1][:top_n])
 
 
-def summarize(content, title, top_n=3):
+def summarize(content, title, top_n=10, k_neighbor=1):
     """
     Text summarize
     """
@@ -82,7 +82,7 @@ def summarize(content, title, top_n=3):
     Vs = sent_vector[1:]
 
     # get topn similary sentences
-    sent_ind = most_similarity(Vs, Vt, top_n=top_n, n_neighbors=1)
+    sent_ind = most_similarity(Vs, Vt, top_n=top_n, k_neighbors=k_neighbor)
     _logger.debug(sent_ind)
 
     most_similar_sents = sentence_corpus[1:][sent_ind]

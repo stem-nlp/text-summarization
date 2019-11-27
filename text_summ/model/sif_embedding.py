@@ -23,14 +23,21 @@ def sif_embedding(sentences: list, wv, alpha=1e-3, nc=1,
     X = counter.fit_transform(sentences)
     X = X.toarray()  # convert to numpy narray
 
-    # TODO OOV(out of vocabulary)
+    # TODO Remove OOV(out of vocabulary) words
+    features = []
+    feature_ind = []
+    for i, word in enumerate(counter.get_feature_names()):
+        if word in wv:
+            features.append(word)
+            feature_ind.append(i)
+
+    X = X[:, feature_ind]
 
     freqs = X.sum(axis=0)
     probs = freqs / np.sum(freqs)
     weight_coeff = alpha / (alpha + probs)
 
     # vocabulary vector matrix
-    features = counter.get_feature_names()
     vocabulary_vector = np.zeros((len(features), wv.vector_size))
     for i in range(len(features)):
         vocabulary_vector[i] = wv[features[i]]
@@ -39,7 +46,7 @@ def sif_embedding(sentences: list, wv, alpha=1e-3, nc=1,
     sentence_len = X.sum(axis=1)
     sentence_vector = np.divide(np.multiply(X, weight_coeff).dot(vocabulary_vector).T, sentence_len).T
 
-    # TODO process sentence vector
+    sentence_vector[np.isfinite(sentence_vector) == False] = 0.0    # NOQA
 
     # sentence vector minus primary component
     svd = TruncatedSVD(n_components=nc, random_state=42)

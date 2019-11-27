@@ -10,10 +10,12 @@ _logger = logging.getLogger()
 
 def test_summarize():
     dataset = pd.read_csv(config.NEWS_CORPUS_DATASET_FILEPATH)
-    record = dict(dataset.iloc[10, :])
+    record = dict(dataset.iloc[-2, :])
     title, content = record['title'], record['content']
 
     summary = summarize(content, title)
     print(title)
+    print('\n')
     print(content)
+    print('\n')
     print(summary)
