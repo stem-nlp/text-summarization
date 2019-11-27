@@ -23,7 +23,7 @@ def sif_embedding(sentences: list, wv, alpha=1e-3, nc=1,
     X = counter.fit_transform(sentences)
     X = X.toarray()  # convert to numpy narray
 
-    # TODO Remove OOV(out of vocabulary) words
+    # Remove OOV(out of vocabulary) words
     features = []
     feature_ind = []
     for i, word in enumerate(counter.get_feature_names()):

@@ -14,8 +14,4 @@ def test_summarize():
     title, content = record['title'], record['content']
 
     summary = summarize(content, title)
-    print(title)
-    print('\n')
-    print(content)
-    print('\n')
-    print(summary)
+    print('\n'.join(['title: '+title, 'content: ' + content, 'summary: '+summary]))
