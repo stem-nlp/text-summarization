@@ -1,5 +1,6 @@
 # 非监督文本自动摘要模型的构建
 import random
+import textsummary
 
 class AutoSummary():
     def __init__(self, title, body):
@@ -8,7 +9,9 @@ class AutoSummary():
     def train(self):
         pass
     def getResult(self):
-        return "测试结果。测试结果。测试结果。测试结果。"
+        summary=textsummary.get_summary(self.title,self.body)
+        return summary
+       # return "测试结果。测试结果。测试结果。测试结果。"
     def getDetail(self):
         res = []
         for i in range(4):

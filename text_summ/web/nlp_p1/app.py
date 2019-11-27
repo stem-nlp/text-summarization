@@ -3,6 +3,7 @@ from flask_cors import cross_origin
 import json
 
 from model import AutoSummary
+
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
