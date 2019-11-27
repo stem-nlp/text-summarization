@@ -13,3 +13,4 @@ NEWS_CORPUS_DATASET_FILEPATH = os.path.join(BASE_DIR, 'datasets/news_corpus.csv'
 NEWS_CORPUS_FILEPATH = os.path.join(BASE_DIR, 'datasets/news_corpus.txt')
 WV_WORD_VECTOR_FILEPTH = os.path.join(BASE_DIR, 'datasets/wordvectors.kv')
 WV_WORD_VECTOR_TEXT_FILEPTH = os.path.join(BASE_DIR, 'datasets/wordvectors.kv.txt')
+STOPWORDS_FILEPATH = os.path.join(BASE_DIR, 'datasets/stopwords.txt')
