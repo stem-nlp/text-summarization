@@ -87,6 +87,28 @@ def summarize(content, title, top_n=10, k_neighbor=1):
 
     most_similar_sents = sentence_corpus[1:][sent_ind]
     most_similar_sents = list(map(lambda sent: sent.replace(' ', ''), most_similar_sents))
-    summary = '，'.join(most_similar_sents) + '。'
+
+    # padding sentence punctuation
+    summary_sentences = []
+    for sent in most_similar_sents:
+        try:
+            ind = content.find(sent)
+            if ind > 0:
+                new_sent = sent + content[ind + len(sent)]
+            else:
+                new_sent = sent + '，'
+        except:  # NOQA
+            new_sent = sent + '，'
+        summary_sentences.append(new_sent)
+
+    # filter semi sentences.
+    max_end_sent_ind = 0
+    for i, sent in enumerate(summary_sentences):
+        if sent.endswith('。'):
+            max_end_sent_ind = i
+
+    top_ind = max([3, max_end_sent_ind+1])
+
+    summary = ''.join(summary_sentences[:top_ind])
 
     return summary
