@@ -113,3 +113,14 @@ body {
   font-weight: bold;
   display: none;
 }
+
+.per-button {
+  float: right;
+  margin-top: .6rem;
+}
+
+.btn-outline-secondary:focus, .btn-outline-secondary.focus {
+  box-shadow: none;
+  background-color:#6c757d;
+  color:#FFF;
+}

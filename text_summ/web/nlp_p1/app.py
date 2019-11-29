@@ -16,8 +16,9 @@ def model():
     try:
         input_title = request.form.get('title','')
         input_body = request.form.get('body','')
+        input_percent = request.form.get('percent', '')
 
-        model = AutoSummary(input_title, input_body)
+        model = AutoSummary(input_title, input_body,input_percent)
         result = {
             "code": 0,
             "data":{

@@ -16,6 +16,7 @@ wv_model=KeyedVectors.load_word2vec_format(path + 'model_skipgram.model',binary=
 word_dict=np.load(path+'words_dict.npy',allow_pickle=True)
 embedding_size = 200
 
+
 class Word:
     def __init__(self, text, vector):
         self.text = text
@@ -101,10 +102,11 @@ def knn_Smooth(scores,k=3):
         knn_scores.append(t)
     return knn_scores
 
-def get_summary(input_title,input_body,rate=0.2):
+def get_summary(input_title,input_body,rate=0.3):
     summary=""
     title = input_title
     article = input_body
+    rate=float(rate)
     if pd.isnull(article):
         if pd.notnull(title):
             summary = title
@@ -141,6 +143,8 @@ def get_summary(input_title,input_body,rate=0.2):
             score=cosine_similarity(sv.reshape(1, embedding_size),paragragh_vector.reshape(1, embedding_size))
             +cosine_similarity(sv.reshape(1, embedding_size),title_vectors[0].reshape(1, embedding_size))
             scores.append(score)
+        scores[0] += 0.2
+        scores[len(scores)-1] += 0.2
         # 利用KNN对句子相似度得分进行平滑
         # knn_scores=knn_Smooth(scores,3)
         # 相邻三个元素求平均值
@@ -151,8 +155,7 @@ def get_summary(input_title,input_body,rate=0.2):
         p_num = max(int(len(ranked_sentences) * rate), 2)
         for top_num in range(min(len(ranked_sentences), p_num)):
             for sentence in article:
-                if(sentence.replace('。', '').replace('？', '').replace('！', '')==
-                   (ranked_sentences[top_num][1]).replace('。', '').replace('？', '').replace('！', '')):
+                if (sentence == (ranked_sentences[top_num][1]).replace('。', '')):
                     top_sentense[article.index(sentence)]=ranked_sentences[top_num][1]
         sort_sentense=dict(sorted(top_sentense.items(), key=lambda item:item[0]))
         for s in sort_sentense.values():
